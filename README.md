@@ -10,10 +10,10 @@ This document provides a quick guide to the mrglmm( ) function, specifies the re
 ## Notations
 The function mrglmm( ) is corresponded to Rcpp function EM_grad_linear.cpp or EM_grad_logistic.cpp targeting identity and logit link. The notations in the code are:
 
-- \(N\): The total number of samples  
-- \(d\): The number of nodes/regions of the matrix response  
-- \(T\): The number of measurements for each subject  
-- \(p\): The number of covariates  
+* $N$: The total number of samples  
+* $d$: The number of nodes/regions of the matrix response  
+* $T$: The number of measurements for each subject  
+* $p$: The number of covariates  
 
 ## Input Data Structure
 The following are the data structure of the input for mrglmm( ):
