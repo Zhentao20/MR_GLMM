@@ -1,5 +1,4 @@
 seed <- as.integer(abs(rnorm(1) * 100000))
-## setwd("~/Desktop/final_code_0228_2025")
 
 #args <- commandArgs(trailingOnly = TRUE)
 # r <- as.numeric(args[1])
@@ -190,8 +189,9 @@ step1 <- 0.04
 step2 <- 0.4
 p=5
 
+#eps,  Eps, lhs
 sourceCpp("EM_grad_linear.cpp")
-op <- output(Y, X, A, Xt, t, M, b0, sgamma0, sgammat, se0, eps,  Eps, tol, iter,  maxit, lhs, Abar, lambda, bt, tol1, iter1, maxit1, maxit2, s, U, V, Btrue,1/8,r,N,p,d,step1,step2)
+op <- mrglmm(Y, X, A, Xt, t, M, b0, sgamma0, sgammat, se0, eps,  Eps, tol, iter,  maxit, lhs, Abar, lambda, bt, tol1, iter1, maxit1, maxit2, s, U, V, Btrue,1/8,r,N,p,d,step1,step2)
 save(op,file=filename4)
 
 theta2 <- op[[9]] %*% lambda %*% t(op[[9]])
@@ -216,8 +216,8 @@ compute_sens_spec <- function(original, estimated) {
   return(list(Sensitivity = sensitivity, Specificity = specificity))
 }
 
-sens_net <- compute_sens_spec(vecA,vecB)[[1]] #1
-spec_net <- compute_sens_spec(vecA,vecB)[[2]] #0.944444
+sens_net <- compute_sens_spec(vecA,vecB)[[1]] 
+spec_net <- compute_sens_spec(vecA,vecB)[[2]] 
 
 
 TP <- sum(vecA  != 0 & vecB != 0)

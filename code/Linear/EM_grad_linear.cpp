@@ -289,7 +289,7 @@ arma::mat trun(arma::mat b_ages, double s, double d){
 }
 
 // [[Rcpp::export]]
-List output(List Y, List X, List A, List Xt, arma::vec t, double M, List bt, arma::mat sgamma0, arma::mat sgammatrue, List se0, double eps, double Eps, double tol, double iter, double maxit, double lhs, arma::mat Abar, arma::mat lambda, List b0, double tol1, double iter1, double maxit1, double maxit2, double s, arma::mat utrue, arma::mat vtrue, List btrue, double gam, int r, double N, double p, double d,  double step1, double step2){
+List mrglmm(List Y, List X, List A, List Xt, arma::vec t, double M, List bt, arma::mat sgamma0, arma::mat sgammatrue, List se0, double eps, double Eps, double tol, double iter, double maxit, double lhs, arma::mat Abar, arma::mat lambda, List b0, double tol1, double iter1, double maxit1, double maxit2, double s, arma::mat utrue, arma::mat vtrue, List btrue, double gam, int r, double N, double p, double d,  double step1, double step2){
   arma::vec Si(r);
   arma::mat Ui(Abar.n_rows, r), Vi(Abar.n_cols, r);
   
