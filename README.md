@@ -1,8 +1,3 @@
----
-output:
-  pdf_document: default
-  html_document: default
----
 ## Overview
 
 This project introduces a class of matrix-response generalized linear mixed models (MR-GLMMs) designed for longitudinal brain network analysis, where the responses are time-indexed square matrices. After applying canonical link transformations, the conditional means are modeled as linear combinations of time-varying covariates with matrix-valued coefficients, along with a matrix-valued intercept that incorporates random effects.
@@ -23,7 +18,7 @@ The function mrglmm( ) is corresponded to Rcpp function EM_grad_linear.cpp or EM
 ## Input Data Structure
 The following are the data structure of the input for mrglmm( ):
 
-* $Y$: Matrix responses of all subjects across time points $t$. This is a list of length $t$, where each element is an array of dimension $d \times d \times N$.  
+* $Y$: Matrix responses of all subjects across time points $T$. This is a list of length $T$, where each element is an array of dimension $d \times d \times N$.  
 * $X$: Covariate information for all subjects. This is a list of length $p$, where each element is a vector of length $N \times t$ representing covariate values for all subjects across $t$ time points.  
 * $A$: A subject-centered reorganization of the data. Each entry of $A$ corresponds to a single subject and stores that subject’s sequence of matrix responses across time. For example, in the simulation setting:  
 
@@ -70,21 +65,23 @@ where setting $T=5$, $Xt$ is a list of length $N \times T$. Each element $Xt_{i,
 * $sgamma0$: A $d \times d$ zero matrix serving as an empty placeholder for the matrix-valued standard deviation of the random intercept.  
 * $sgammat$: Same structure as $sgamma0$, but used as the initial values for the standard deviation of the random intercept.  
 * $se0$: A list of length $N$, where each element is the same $d \times d$ matrix filled with initial values. This list represents the initial error (noise) term assigned to each subject.  
-* $tol$: Convergence tolerance used as the stopping criterion for the EM algorithm.  
+* $tol$: Convergence tolerance used as the stopping criterion for the EM algorithm.
+* $tol1$: Convergence tolerance used as the stopping criterion for the backtracking line search. 
 * $maxit$: The maximum number of iterations in the EM algorithm. 
 * $maxit1$: The maximum number of backtracking line search process.  
 * $maxit2$: The maximum number of iterations in the EM algorithm during the symmetrization phase.  
-* $lhs$: A initial value of Q-function in backtracking line search. 
-* $$:
-* $$:
-* $$:
-* $$:
- 
+* $lhs$: Initial value of the Q-function used in backtracking line search.  
+* $Abar$: The $d \times d$ mean matrix, obtained by averaging all subjects’ matrix responses across time points.  
+* $\lambda$: A diagonal identity matrix, used as the initial value of $\lambda$ in the symmetrization phase.  
+* $U$: True factor matrix $U$ from the factorization of the fixed intercept (used in simulation experiments).  
+* $V$: True factor matrix $V$ from the factorization of the fixed intercept (used in simulation experiments).  
+* $Btrue$: True value of the tensor parameters $B$ (used in simulation experiments).  
+* $N$: The total number of samples.  
+* $d$: The number of nodes/regions in the matrix response.  
+* $p$: The number of covariates.  
+* $r$: The assumed rank of $\Theta$.  
+* $s$: The assumed sparsity level of $B$. For each covariate coefficient estimate, elements smaller than the top $s \times 100\%$ largest values are truncated to zero.  
+* $step1$: Baseline step size in the gradient descent algorithm for estimating $U$ and $V$.  
+* $step2$: Baseline step size in the gradient descent algorithm for estimating $B$.  
 
-
-```R
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
-
+## Understanding the Outputs

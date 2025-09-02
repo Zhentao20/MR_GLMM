@@ -289,7 +289,7 @@ arma::mat trun(arma::mat b_ages, double s, double d){
 }
 
 // [[Rcpp::export]]
-List mrglmm(List Y, List X, List A, List Xt, arma::vec t, double M, List bt, arma::mat sgamma0, arma::mat sgammatrue, List se0,   double tol, double iter, double maxit, double lhs, arma::mat Abar, arma::mat lambda, List b0, double tol1, double iter1, double maxit1, double maxit2, double s, arma::mat utrue, arma::mat vtrue, List btrue, double gam, int r, double N, double p, double d,  double step1, double step2){
+List mrglmm_id(List Y, List X, List A, List Xt, arma::vec t, double M, List bt, arma::mat sgamma0, arma::mat sgammatrue, List se0,  double tol, double maxit, double lhs, arma::mat Abar, arma::mat lambda, List b0, double tol1, double maxit1, double maxit2, double s, arma::mat utrue, arma::mat vtrue, List btrue, double gam, int r, double N, double p, double d,  double step1, double step2){
   arma::vec Si(r);
   arma::mat Ui(Abar.n_rows, r), Vi(Abar.n_cols, r);
   
@@ -321,8 +321,9 @@ List mrglmm(List Y, List X, List A, List Xt, arma::vec t, double M, List bt, arm
   arma::vec record_step_theta;
   arma::vec record_step_b;
   arma::vec record_eps;
-  double eps = 1;
-  double Eps = 1;
+  int eps = 1;
+  int Eps = 1;
+  int iter = 0;
   while (eps > tol && iter < maxit) {
     // double qfunction0 = lhs;
     List samples = sampleall(A, Xt, t, M, Ut, lambda, Vt, bt, sgammat, set, N,d,0);
@@ -351,7 +352,6 @@ List mrglmm(List Y, List X, List A, List Xt, arma::vec t, double M, List bt, arm
 //    Rcout << std::setprecision(10) <<"The iter1 is: " << iter1 << std::endl;
 //    double label = std::abs(lhs - approxq)/std::abs(approxq);
 //    Rcout << std::setprecision(10) <<"The abs(lhs - approxq)/abs(approxq) is: " << label << std::endl;
-
     while (std::abs(lhs - approxq)/std::abs(approxq) > tol1 && iter1 < maxit1) {
       arma::mat id = arma::mat(d,d).fill(1);
       approxq = Q(A, Xt, t, Ut, lambda, Vt, bt, sgammat, set, samples, M, gam, d, 0);
