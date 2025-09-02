@@ -189,9 +189,9 @@ step1 <- 0.04
 step2 <- 0.4
 p=5
 
-#eps,  Eps, lhs
+#lhs
 sourceCpp("EM_grad_linear.cpp")
-op <- mrglmm(Y, X, A, Xt, t, M, b0, sgamma0, sgammat, se0, eps,  Eps, tol, iter,  maxit, lhs, Abar, lambda, bt, tol1, iter1, maxit1, maxit2, s, U, V, Btrue,1/8,r,N,p,d,step1,step2)
+op <- mrglmm(Y, X, A, Xt, t, M, b0, sgamma0, sgammat, se0,  tol, iter,  maxit, lhs, Abar, lambda, bt, tol1, iter1, maxit1, maxit2, s, U, V, Btrue,1/8,r,N,p,d,step1,step2)
 save(op,file=filename4)
 
 theta2 <- op[[9]] %*% lambda %*% t(op[[9]])

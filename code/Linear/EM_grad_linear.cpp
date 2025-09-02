@@ -289,7 +289,7 @@ arma::mat trun(arma::mat b_ages, double s, double d){
 }
 
 // [[Rcpp::export]]
-List mrglmm(List Y, List X, List A, List Xt, arma::vec t, double M, List bt, arma::mat sgamma0, arma::mat sgammatrue, List se0, double eps, double Eps, double tol, double iter, double maxit, double lhs, arma::mat Abar, arma::mat lambda, List b0, double tol1, double iter1, double maxit1, double maxit2, double s, arma::mat utrue, arma::mat vtrue, List btrue, double gam, int r, double N, double p, double d,  double step1, double step2){
+List mrglmm(List Y, List X, List A, List Xt, arma::vec t, double M, List bt, arma::mat sgamma0, arma::mat sgammatrue, List se0,   double tol, double iter, double maxit, double lhs, arma::mat Abar, arma::mat lambda, List b0, double tol1, double iter1, double maxit1, double maxit2, double s, arma::mat utrue, arma::mat vtrue, List btrue, double gam, int r, double N, double p, double d,  double step1, double step2){
   arma::vec Si(r);
   arma::mat Ui(Abar.n_rows, r), Vi(Abar.n_cols, r);
   
@@ -321,6 +321,8 @@ List mrglmm(List Y, List X, List A, List Xt, arma::vec t, double M, List bt, arm
   arma::vec record_step_theta;
   arma::vec record_step_b;
   arma::vec record_eps;
+  double eps = 1;
+  double Eps = 1;
   while (eps > tol && iter < maxit) {
     // double qfunction0 = lhs;
     List samples = sampleall(A, Xt, t, M, Ut, lambda, Vt, bt, sgammat, set, N,d,0);
@@ -393,30 +395,11 @@ List mrglmm(List Y, List X, List A, List Xt, arma::vec t, double M, List bt, arm
             // Calculate the adjustment for hb[q] for this specific index i
             arma::mat adjustment_for_this_i = ((Yt.slice(i)-fm) * outer_xqit) / ((denom)* bn * seti % seti);
             hbq_adjustment -= adjustment_for_this_i; // Cumulatively sum the adjustment across all i
-            
-            // hu -= ((Yt.slice(i) - exp(fm)/(id + exp(fm))) * Vt) / (denom*bn)  - (4*gam*Ut*(trans(Ut)*Ut-trans(Vt)*Vt))/ (denom*bn*M);
-            // hv -= (trans(Yt.slice(i) - exp(fm)/(id + exp((fm)))) * Ut) / (denom*bn)  - (4*gam*Vt*(trans(Ut)*Ut-trans(Vt)*Vt))/ (denom*bn*M);
-            // hbq_adjustment -= ((Yt.slice(i) - exp(fm)/(id + exp(fm)) ) * outer_xqit) / (denom) ;
           }
         }
         hb[q] = hbq_adjustment;
       }
-      // arma::mat Ug = hu.submat(0, 0, r-1, r-1);
-      // arma::mat Vg = hv.submat(0, 0, r-1, r-1);
-      // arma::mat hb1 = hb[0];
-      // arma::mat hb3 = hb[2];
-      // arma::mat hb5 = hb[4];
-      // 
-      // arma::mat b1g = hb1.submat(0, 0, 2, 2);
-      // arma::mat b3g = hb3.submat(0, 0, 2, 2);
-      // arma::mat b5g = hb5.submat(0, 0, 2, 2);
-      // 
-      // Rcout << "The initial value of sub-hu of inner 1 is: " << Ug << std::endl;
-      // Rcout << "The initial value of sub-hv of inner 1 is: " << Vg << std::endl;
-      // Rcout << "The initial value of sub-hb1 of inner 1 is: " << b1g << std::endl;
-      // Rcout << "The initial value of sub-hb3 of inner 1 is: " << b3g << std::endl;
-      // Rcout << "The initial value of sub-hb5 of inner 1 is: " << b5g << std::endl;
-      
+
       U0 = Ut;
       V0 = Vt;
       b0 = bt;
@@ -486,16 +469,6 @@ List mrglmm(List Y, List X, List A, List Xt, arma::vec t, double M, List bt, arm
      else{
          bt=b0;
      }
-      // arma::mat b1 = bt[0];
-      // arma::mat b3 = bt[2];
-      // arma::mat b5 = bt[4];
-      // arma::mat b1u = b1.submat(0, 0, 2, 2);
-      // arma::mat b3u = b3.submat(0, 0, 2, 2);
-      // arma::mat b5u = b5.submat(0, 0, 2, 2);
-      // 
-      // Rcout << "The updated b1 of inner 1 is: " << b1u << std::endl;
-      // Rcout << "The updated b3 of inner 1 is: " << b3u << std::endl;
-      // Rcout << "The updated b5 of inner 1 is: " << b5u << std::endl;
       lhs = Q(A, Xt, t, Ut, lambda, Vt, bt, sgammat, set, samples, M, gam, d, 0);
 //      Rcout << std::setprecision(10) <<"The lhs at INNER (test) is: " << lhs << std::endl;
       iter1++;
@@ -668,9 +641,6 @@ List mrglmm(List Y, List X, List A, List Xt, arma::vec t, double M, List bt, arm
             // Calculate the adjustment for hb[q] for this specific index i
             arma::mat adjustment_for_this_i = ((Yt.slice(i)-fm) * outer_xqit) / ((denom)* bkn * seti % seti);
             hbq_adjustment -= adjustment_for_this_i; // Cumulatively sum the adjustment across all i
-            // hu -= ((Yt.slice(i) - exp(fm)/(id + exp(fm))) * Vt) / (denom*bkn)  ;
-            // hv -= (trans(Yt.slice(i) - exp(fm)/(id + exp((fm)))) * Ut) / (denom*bkn);
-            // hbq_adjustment -= ((Yt.slice(i) - exp(fm)/(id + exp(fm)) ) * outer_xqit) / (denom) ;
           }
         }
         hb[q] = hbq_adjustment;
@@ -821,8 +791,6 @@ List mrglmm(List Y, List X, List A, List Xt, arma::vec t, double M, List bt, arm
     ebica = 2 * N * lhs + (2 * d * r ) * (log(d * d * N) + log(d * d));
   }
   
-//  double ebic = 2 * N *d *d * lhs + (2 * d * r + d * d * s * p) * (log(d * d * N) + log(d * d * (p+1)));
-//  double ebica = 2 * N * lhs + (2 * d * r + d * d * s * p) * (log(d * d * N) + log(d * d * (p+1)));
   List z = Rcpp::List::create(Ut,Vt,bt, record_q, record_dif_thetaf, record_dif_b, record_step_theta,record_step_b,Uk,bk, Record_q, Record_dif_thetaf, Record_dif_b, Record_step_theta,Record_step_b,ebic,lambda,ebica);
   return(z);
 }
