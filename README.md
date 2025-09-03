@@ -32,19 +32,9 @@ for (i in 1:N) {
 where setting $T=5$, $A[[i]]$ contains all the matrices for subject $i$. Each element inside $A[[i]]$ is a $d \times d$ matrix, one per time point. This format makes it easier for the algorithm to iterate over subjects and access their longitudinal matrix responses.  
 
 * $Xt$: We reorganize $X$ into a subject–time–structured list  
-$Xt = \{ Xt_{i,t} : i=1,\ldots,N;\; t=1,\ldots,T \}$,  
+$Xt = \{ Xt_{i,t} : i=1,\ldots,N; t=1,\ldots,T \}$,  
 where each element is defined as  
 $Xt_{i,t} = ( X^{(1)}_{(i-1)T+t}, \; X^{(2)}_{(i-1)T+t}, \; \ldots, \; X^{(p)}_{(i-1)T+t} )$.  
-
-Thus:  
-- $Xt_{i,t}$ corresponds to subject $i$ at time $t$.  
-- Each $Xt_{i,t}$ is a $p$-dimensional covariate vector at that subject–time combination.  
-- Collectively, $Xt$ is a list of length $N \times T$, storing covariates in subject–time order.  
-
-$$Xt = \{ Xt_{i,t} : i=1,\ldots,N;\; t=1,\ldots,T \},$$  
-where each element is defined as  
-
-$$Xt_{i,t} = ( X^{(1)}_{(i-1)T+t}, \; X^{(2)}_{(i-1)T+t}, \; \ldots, \; X^{(p)}_{(i-1)T+t} ).$$  
 
 Thus:  
 - $Xt_{i,t}$ corresponds to subject $i$ at time $t$.  
