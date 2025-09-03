@@ -8,11 +8,11 @@ This document provides a quick guide to the mrglmm( ) function, specifies the re
 
 ## Notations
 
-The function mrglmm( ) is corresponded to Rcpp function EM_grad_linear.cpp or EM_grad_logistic.cpp targeting identity and logit link. The notations in the code are:
+The functions `mrglmm_id()` and `mrglmm_logit()` interface with the Rcpp implementations in `EM_grad_linear.cpp` and `EM_grad_logistic.cpp`, corresponding to the identity and logit link functions, respectively.The notations in the code are:
 
--   $N$: The total number of samples\
--   $d$: The number of nodes/regions of the matrix response\
--   $T$: The number of measurements for each subject\
+-   $N$: The total number of samples
+-   $d$: The number of nodes/regions of the matrix response
+-   $T$: The number of measurements for each subject
 -   $p$: The number of covariates
 
 ## Input Data Structure
@@ -66,27 +66,27 @@ for (i in 1:N) {
 where setting $T=5$, $Xt$ is a list of length $N \times T$. Each element $Xt_{i,t}$ corresponds to subject $i$ at time $t$, and is stored as a vector of length $p$ containing all covariates.
 
 -   $t$: The number of measurements for each subject.\
--   $M$: The number of replications, specifying how many Monte Carlo samples are drawn at each iteration in the E-step to approximate the expectation.\
--   $b0$: A list of length $p$, where each element is a $d \times d$ zero matrix. This provides empty placeholders for the matrix-valued coefficient matrices.\
--   $bt$: Same structure as $b0$, but used as the initial values for the fixed-slope estimates.\
--   $sgamma0$: A $d \times d$ zero matrix serving as an empty placeholder for the matrix-valued standard deviation of the random intercept.\
--   $sgammat$: Same structure as $sgamma0$, but used as the initial values for the standard deviation of the random intercept.\
--   $se0$: A list of length $N$, where each element is the same $d \times d$ matrix filled with initial values. This list represents the initial error (noise) term assigned to each subject.\
+-   $M$: The number of replications, specifying how many Monte Carlo samples are drawn at each iteration in the E-step to approximate the expectation.
+-   $b0$: A list of length $p$, where each element is a $d \times d$ zero matrix. This provides empty placeholders for the matrix-valued coefficient matrices.
+-   $bt$: Same structure as $b0$, but used as the initial values for the fixed-slope estimates.
+-   $sgamma0$: A $d \times d$ zero matrix serving as an empty placeholder for the matrix-valued standard deviation of the random intercept.
+-   $sgammat$: Same structure as $sgamma0$, but used as the initial values for the standard deviation of the random intercept.
+-   $se0$: A list of length $N$, where each element is the same $d \times d$ matrix filled with initial values. This list represents the initial error (noise) term assigned to each subject.
 -   $tol$: Convergence tolerance used as the stopping criterion for the EM algorithm.
 -   $tol1$: Convergence tolerance used as the stopping criterion for the backtracking line search.
 -   $maxit$: The maximum number of iterations in the EM algorithm.
--   $maxit1$: The maximum number of backtracking line search process.\
--   $maxit2$: The maximum number of iterations in the EM algorithm during the symmetrization phase.\
--   $lhs$: Initial value of the Q-function used in backtracking line search.\
--   $Abar$: The $d \times d$ mean matrix, obtained by averaging all subjects’ matrix responses across time points.\
--   $\lambda$: A diagonal identity matrix, used as the initial value of $\lambda$ in the symmetrization phase.\
--   $U$: True factor matrix $U$ from the factorization of the fixed intercept (used in simulation experiments).\
--   $V$: True factor matrix $V$ from the factorization of the fixed intercept (used in simulation experiments).\
--   $Btrue$: True value of the tensor parameters $B$ (used in simulation experiments).\
--   $N$: The total number of samples.\
--   $d$: The number of nodes/regions in the matrix response.\
--   $p$: The number of covariates.\
--   $r$: The assumed rank of $\Theta$.\
--   $s$: The assumed sparsity level of $B$. For each covariate coefficient estimate, elements smaller than the top $s \times 100\text{\%}$ largest values are truncated to zero.\
--   $step1$: Baseline step size in the gradient descent algorithm for estimating $U$ and $V$.\
+-   $maxit1$: The maximum number of backtracking line search process.
+-   $maxit2$: The maximum number of iterations in the EM algorithm during the symmetrization phase.
+-   $lhs$: Initial value of the Q-function used in backtracking line search.
+-   $Abar$: The $d \times d$ mean matrix, obtained by averaging all subjects’ matrix responses across time points.
+-   $\lambda$: A diagonal identity matrix, used as the initial value of $\lambda$ in the symmetrization phase.
+-   $U$: True factor matrix $U$ from the factorization of the fixed intercept (used in simulation experiments).
+-   $V$: True factor matrix $V$ from the factorization of the fixed intercept (used in simulation experiments).
+-   $Btrue$: True value of the tensor parameters $B$ (used in simulation experiments).
+-   $N$: The total number of samples.
+-   $d$: The number of nodes/regions in the matrix response.
+-   $p$: The number of covariates.
+-   $r$: The assumed rank of $\Theta$.
+-   $s$: The assumed sparsity level of $B$. For each covariate coefficient estimate, elements smaller than the top $s \times 100\text{\%}$ largest values are truncated to zero.
+-   $step1$: Baseline step size in the gradient descent algorithm for estimating $U$ and $V$.
 -   $step2$: Baseline step size in the gradient descent algorithm for estimating $B$.
