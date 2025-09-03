@@ -1,18 +1,13 @@
 seed <- as.integer(abs(rnorm(1) * 100000))
-setwd("C:/Users/zhent/OneDrive/Desktop/test_0220")
 
 #args <- commandArgs(trailingOnly = TRUE)
 #r <- as.numeric(args[1])
 #s <- as.numeric(args[2])
 
 #-------program body-----  
-#setwd("~/Desktop/GLMM_network")
 library(Rcpp)
 library(RcppArmadillo)
-# sourceCpp("GLMM_network/EM_0329_CPP.cpp")
-# Rcpp::sourceCpp("EM_0329_CPP.cpp")
-#r <- as.numeric(args[1])
-#s <- as.numeric(args[2])
+
 
 d <- 10
 set.seed(7)
@@ -186,12 +181,9 @@ step2 <- 0.1
 p=5
 d=10
 
-op <- output(Y, X, A, Xt, t, M, b0, sgamma0, sgammat, eps, Eps, tol, iter,  maxit, lhs, Abar, lambda, bt, tol1, iter1, maxit1, maxit2, s, U, V, Btrue,1/8,r,N,p,d,step1,step2)
-#op[[3]][[5]]
-#btrue[[5]]
-#op[[10]][[5]]
+#eps, Eps, iter, iter1
+op <- mrglmm_logit(Y, X, A, Xt, t, M, b0, sgamma0, sgammat, tol, maxit, lhs, Abar, lambda, bt, tol1, maxit1, maxit2, s, U, V, Btrue,1/8,r,N,p,d,step1,step2)
 
-# theta1 <- op[[1]]%*%t(op[[2]])
 theta2 <- op[[9]] %*% lambda %*% t(op[[9]])
 
 vecA <- as.vector(cbind(Btrue[[1]],Btrue[[2]],Btrue[[3]],Btrue[[4]],Btrue[[5]]))

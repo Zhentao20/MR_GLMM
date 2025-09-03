@@ -251,7 +251,8 @@ double Q(List A, List Xt,arma::vec t, arma::mat Ut, arma::mat lambda, arma::mat 
     int ti = t(i);
     List xi(ti);
     for (int T = 0; T < ti; T++){
-      xi[T] =Xt[5*i+T];
+//change 5 to ti
+      xi[T] =Xt[i*ti+T];
     }
     arma::cube gammai = samples[i];
     Q.slice(i) = qq(Ai, xi, ti, M, Ut,lambda, Vt, b, sgammat, gammai, gam, d, bo);
@@ -292,7 +293,7 @@ arma::mat trun(arma::mat b_ages, double s, double d){
 }
 
 // [[Rcpp::export]]
-List output(List Y, List X, List A, List Xt, arma::vec t, double M, List bt, arma::mat sgamma0, arma::mat sgammatrue, double eps, double Eps, double tol, double iter, double maxit, double lhs, arma::mat Abar, arma::mat lambda, List b0, double tol1, double iter1, double maxit1, double maxit2, double s, arma::mat utrue, arma::mat vtrue, List btrue, double gam, int r, double N, double p, double d,  double step1, double step2){
+List mrglmm_logit(List Y, List X, List A, List Xt, arma::vec t, double M, List bt, arma::mat sgamma0, arma::mat sgammatrue, double tol,  double maxit, double lhs, arma::mat Abar, arma::mat lambda, List b0, double tol1, double maxit1, double maxit2, double s, arma::mat utrue, arma::mat vtrue, List btrue, double gam, int r, double N, double p, double d,  double step1, double step2){
   arma::vec Si(r);
   arma::mat Ui(Abar.n_rows, r), Vi(Abar.n_cols, r);
 
@@ -323,6 +324,9 @@ List output(List Y, List X, List A, List Xt, arma::vec t, double M, List bt, arm
   arma::vec record_step_theta;
   arma::vec record_step_b;
   arma::vec record_eps;
+  int eps = 1;
+  int Eps = 1;
+  int iter = 0;
   while (eps > tol && iter < maxit) {
     // double qfunction0 = lhs;
     List samples = sampleall(A, Xt, t, M, Ut, lambda, Vt, bt, sgammat, N,d,0);
@@ -402,21 +406,6 @@ List output(List Y, List X, List A, List Xt, arma::vec t, double M, List bt, arm
         }
           hb[q] = hbq_adjustment;
       }
-          // arma::mat Ug = hu.submat(0, 0, r-1, r-1);
-          // arma::mat Vg = hv.submat(0, 0, r-1, r-1);
-          // arma::mat hb1 = hb[0];
-          // arma::mat hb3 = hb[2];
-          // arma::mat hb5 = hb[4];
-          // 
-          // arma::mat b1g = hb1.submat(0, 0, 4, 4);
-          // arma::mat b3g = hb3.submat(0, 0, 4, 4);
-          // arma::mat b5g = hb5.submat(0, 0, 4, 4);
-          // 
-          // Rcout << "The initial value of sub-hu of inner 1 is: " << Ug << std::endl;
-          // Rcout << "The initial value of sub-hv of inner 1 is: " << Vg << std::endl;
-          // Rcout << "The initial value of sub-hb1 of inner 1 is: " << b1g << std::endl;
-          // Rcout << "The initial value of sub-hb3 of inner 1 is: " << b3g << std::endl;
-          // Rcout << "The initial value of sub-hb5 of inner 1 is: " << b5g << std::endl;
 
       U0 = Ut;
       V0 = Vt;
