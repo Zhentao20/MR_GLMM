@@ -101,6 +101,6 @@ where setting $T=5$, $Xt$ is a list of length $N \times T$. Each element $Xt_{i,
 -   $d$: The number of nodes/regions in the matrix response.
 -   $p$: The number of covariates.
 -   $r$: The assumed rank of $\Theta$.
--   $s$: The assumed sparsity level of $B$. For each covariate coefficient estimate, elements smaller than the top $s \times 100%$ largest values are truncated to zero.
+-   $s$: The assumed sparsity level of $B$. For each covariate coefficient estimate, elements smaller than the top $s \times 100$% largest values are truncated to zero.
 -   $step1$: Baseline step size in the gradient descent algorithm for estimating $U$ and $V$.
 -   $step2$: Baseline step size in the gradient descent algorithm for estimating $B$.
