@@ -41,6 +41,16 @@ Thus:
 - Each $Xt_{i,t}$ is a $p$-dimensional covariate vector at that subject–time combination.  
 - Collectively, $Xt$ is a list of length $N \times T$, storing covariates in subject–time order.  
 
+$$Xt = \{ Xt_{i,t} : i=1,\ldots,N;\; t=1,\ldots,T \},$$  
+where each element is defined as  
+
+$$Xt_{i,t} = ( X^{(1)}_{(i-1)T+t}, \; X^{(2)}_{(i-1)T+t}, \; \ldots, \; X^{(p)}_{(i-1)T+t} ).$$  
+
+Thus:  
+- $Xt_{i,t}$ corresponds to subject $i$ at time $t$.  
+- Each $Xt_{i,t}$ is a $p$-dimensional covariate vector at that subject–time combination.  
+- Collectively, $Xt$ is a list of length $N \times T$, storing covariates in subject–time order.  
+
 Taking the simulation setting for example:  
 ```r
 Xt <- list()
@@ -80,8 +90,8 @@ where setting $T=5$, $Xt$ is a list of length $N \times T$. Each element $Xt_{i,
 * $d$: The number of nodes/regions in the matrix response.  
 * $p$: The number of covariates.  
 * $r$: The assumed rank of $\Theta$.  
-* $s$: The assumed sparsity level of $B$. For each covariate coefficient estimate, elements smaller than the top $s \times 100\%$ largest values are truncated to zero.  
+* $s$: The assumed sparsity level of $B$. For each covariate coefficient estimate, elements smaller than the top $s \times 100\text{\%}$ largest values are truncated to zero.  
 * $step1$: Baseline step size in the gradient descent algorithm for estimating $U$ and $V$.  
 * $step2$: Baseline step size in the gradient descent algorithm for estimating $B$.  
 
-## Understanding the Outputs
+
