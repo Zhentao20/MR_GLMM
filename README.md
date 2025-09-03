@@ -4,7 +4,21 @@ This project introduces a class of matrix-response generalized linear mixed mode
 
 To capture key structural properties, the intercept term is assumed to be low-rank, while the coefficient matrices are assumed to be sparse. Parameter estimation is formulated as a constrained likelihood maximization problem, and an efficient Monte Carlo Expectation–Maximization (MCEM) algorithm is developed to compute the estimators.
 
-This document provides a quick guide to the mrglmm( ) function, specifies the required input data structure for the algorithm to run properly, and explains each component of the function’s output.
+This document provides a quick guide to the `mrglmm_id()` and `mrglmm_logit()` functions, specifies the required input data structure for the algorithm to run properly, and explains each component of the function’s output.
+
+## Installation and Setup
+
+Before using the functions in this repository, make sure you have the following R packages installed:
+
+```r
+install.packages("Rcpp")
+install.packages("RcppArmadillo")
+```
+Then, clone this repository:
+```bash
+git clone https://github.com/Zhentao20/MR_GLMM.git
+cd MR_GLMM
+```
 
 ## Notations
 
@@ -17,10 +31,10 @@ The functions `mrglmm_id()` and `mrglmm_logit()` interface with the Rcpp impleme
 
 ## Input Data Structure
 
-The following are the data structure of the input for mrglmm( ):
+The following are the data structure of the functions' input:
 
--   $Y$: Matrix responses of all subjects across time points $T$. This is a list of length $T$, where each element is an array of dimension $d \times d \times N$.\
--   $X$: Covariate information for all subjects. This is a list of length $p$, where each element is a vector of length $N \times t$ representing covariate values for all subjects across $t$ time points.\
+-   $Y$: Matrix responses of all subjects across time points $T$. This is a list of length $T$, where each element is an array of dimension $d \times d \times N$.
+-   $X$: Covariate information for all subjects. This is a list of length $p$, where each element is a vector of length $N \times t$ representing covariate values for all subjects across $t$ time points.
 -   $A$: A subject-centered reorganization of the data. Each entry of $A$ corresponds to a single subject and stores that subject’s sequence of matrix responses across time. For example, in the simulation setting:
 
 ``` r
