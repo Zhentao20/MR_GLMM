@@ -165,13 +165,8 @@ matrix_rows <- d
 matrix_cols <- d
 se0 <- rep(list(s2t_true), N)
 
-eps <- 1
-Eps <- 1
 tol = 1/10000
 tol1 = 1/100
-
-iter = 1
-iter1 = 1
 
 #number of iterations
 maxit = 500

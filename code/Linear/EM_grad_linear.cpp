@@ -167,7 +167,8 @@ List sampleall( List A, List Xt, arma::vec t, double M, arma::mat Ut, arma::mat 
     List Ai = A[i];
     arma::mat seti = set[i];
     for(int T = 0; T < ti; T++){
-      xi[T] = Xt[i*5+T];
+//change 5 to ti
+      xi[T] = Xt[i*ti+T];
     }
     arma::cube samples_i = sampledi(Ai, xi, ti, M, Ut, lambda, Vt, b, sgammat, seti, d,bo);
     samples[i] = samples_i;

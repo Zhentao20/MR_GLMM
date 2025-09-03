@@ -150,13 +150,9 @@ matrix_cols <- d
 
 se0 <- rep(list(s2t_true), N)
 
-eps <- 1
-Eps <- 1
+
 tol = 1/10000
 tol1 = 1/100
-
-iter = 1
-iter1 = 1
 
 #maxit: number of outer loop1, maxit1: number of inner loop,  maxit2: number of outer loop2
 maxit = 20
