@@ -79,7 +79,7 @@ for (i in 1:N) {
 
 where setting $T=5$, $Xt$ is a list of length $N \times T$. Each element $Xt_{i,t}$ corresponds to subject $i$ at time $t$, and is stored as a vector of length $p$ containing all covariates.
 
--   $t$: The number of measurements for each subject.\
+-   $t$: The number of measurements for each subject.
 -   $M$: The number of replications, specifying how many Monte Carlo samples are drawn at each iteration in the E-step to approximate the expectation.
 -   $b0$: A list of length $p$, where each element is a $d \times d$ zero matrix. This provides empty placeholders for the matrix-valued coefficient matrices.
 -   $bt$: Same structure as $b0$, but used as the initial values for the fixed-slope estimates.
