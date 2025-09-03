@@ -33,22 +33,17 @@ for (i in 1:N) {
 
 where setting $T=5$, $A[[i]]$ contains all the matrices for subject $i$. Each element inside $A[[i]]$ is a $d \times d$ matrix, one per time point. This format makes it easier for the algorithm to iterate over subjects and access their longitudinal matrix responses.
 
--   $Xt$: We reorganize $X$ into a subject–time–structured list\
-    $Xt = \{ Xt_{i,t} : i=1,\ldots,N; t=1,\ldots,T \}$,\
-    where each element is defined as\
-    $Xt_{i,t} = ( X^{(1)}_{(i-1)T+t}, \; X^{(2)}_{(i-1)T+t}, \; \ldots, \; X^{(p)}_{(i-1)T+t} )$.
-
-We reorganize X into a subject–time–structured list
+-   $Xt$: We reorganize X into a subject–time–structured list
 ```math
-Xt = { Xt_{i,t} : i = 1, …, N ;  t = 1, …, T },
+Xt = \{ Xt_{i,t} : i = 1, …, N ;  t = 1, …, T \},
 ```
 where each element is defined as
 ```math
 Xt_{i,t} = ( X^{(1)}_{(i-1)T+t},  X^{(2)}_{(i-1)T+t}, …, X^{(p)}_{(i-1)T+t} ).
 ```
-Thus:\
-- $Xt_{i,t}$ corresponds to subject $i$ at time $t$.\
-- Each $Xt_{i,t}$ is a $p$-dimensional covariate vector at that subject–time combination.\
+Thus:
+- $Xt_{i,t}$ corresponds to subject $i$ at time $t$.
+- Each $Xt_{i,t}$ is a $p$-dimensional covariate vector at that subject–time combination.
 - Collectively, $Xt$ is a list of length $N \times T$, storing covariates in subject–time order.
 
 Taking the simulation setting for example:
